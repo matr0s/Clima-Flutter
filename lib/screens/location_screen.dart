@@ -27,14 +27,13 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUi(dynamic weatherData) {
     setState(() {
-      // if (weatherData == Null) {
-      //   weatherTemp = 0;
-      //   weatherIcon = 'Error';
-      //   message = 'Couldnt get a data';
-      //   cityName = '';
-      //   return;
-      // }
-
+      if (weatherData == null) {
+        weatherTemp = 0;
+        weatherIcon = 'Error';
+        message = 'Couldnt get a data';
+        cityName = '';
+        return;
+      }
       double temp = weatherData['main']['temp'];
       weatherTemp = temp.toInt();
       weatherIcon = weather.getWeatherIcon(weatherData['weather'][0]['id']);
@@ -74,11 +73,14 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      Navigator.push(context,
+                    onPressed: () async {
+                      var typedCityName = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return CityScreen();
                       }));
+                      if (typedCityName != null) {
+                        updateUi(await weather.getCityWeather(typedCityName));
+                      }
                     },
                     child: Icon(
                       Icons.location_city,

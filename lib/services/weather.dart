@@ -6,6 +6,13 @@ import 'package:clima/utilities/constants.dart';
 const kApiKey = '69060ed4df9937556570f4ec99d0ddff';
 
 class WeatherModel {
+  Future<dynamic> getCityWeather(String cityName) async {
+    var url = '$kOpenWeatherURL?q=$cityName&units=metric&appid=$kApiKey';
+    NetworkHelper networkHelper = NetworkHelper(url: url);
+    var weatherData = await networkHelper.getData();
+    return weatherData;
+  }
+
   Future<dynamic> getLocationWeather() async {
     Location location = Location();
 
