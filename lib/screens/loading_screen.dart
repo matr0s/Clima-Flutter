@@ -20,7 +20,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   // Method we need for the first launch of the App
   void getLocationData() async {
     WeatherModel weatherLocation = WeatherModel();
-    var weatherData = await weatherLocation.getWeatherLocation();
+    var weatherData = await weatherLocation.getLocationWeather();
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return LocationScreen(
         locationWeather: weatherData,
